@@ -21,15 +21,16 @@ class MnistWithPrintWriterLabels(Dataset):
 
         return load_internal
 
-    def __init__(self, delegate, root, digit_transform):
+    def __init__(self, delegate, root, digit_transform, label_transform=lambda l: l):
         self.delegate = delegate
         self.root = root
         self.digit_transform = digit_transform
+        self.label_transform = label_transform
         self.loader = self.cached_loader(root)
 
     def __getitem__(self, index):
         image, label = self.delegate.__getitem__(index)
-        digit_name = (int(label) + 1) % 10
+        digit_name = self.label_transform(label)
         digit = self.loader("{:d}.png".format(digit_name), self.digit_transform)
         return image, digit
 

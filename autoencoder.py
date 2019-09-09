@@ -67,12 +67,8 @@ class Net(nn.Module):
 
     def set_eval_encoder(self):
         self.mode = 'EVAL_ENCODER'
-        for param in self.parameters():
-            param.requires_grad = False
         return []
 
     def set_eval_decoder(self):
         self.mode = 'EVAL_DECODER'
-        for param in self.parameters():
-            param.requires_grad = False
         return []
